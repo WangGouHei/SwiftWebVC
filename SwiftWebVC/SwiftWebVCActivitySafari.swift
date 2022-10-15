@@ -8,9 +8,8 @@
 
 import UIKit
 
-class SwiftWebVCActivitySafari : SwiftWebVCActivity {
-    
-    override var activityTitle : String {
+class SwiftWebVCActivitySafari: SwiftWebVCActivity {
+    override var activityTitle: String {
         return NSLocalizedString("Open in Safari", tableName: "SwiftWebVC", comment: "")
     }
     
@@ -24,8 +23,12 @@ class SwiftWebVCActivitySafari : SwiftWebVCActivity {
     }
     
     override func perform() {
-        let completed: Bool = UIApplication.shared.openURL(URLToOpen! as URL)
-        activityDidFinish(completed)
+        let url = URLToOpen! as URL
+        
+        UIApplication.shared.open(url, options: [:],
+                                  completionHandler: {
+                                      value in
+            self.activityDidFinish(value)
+                                  })
     }
-    
 }
